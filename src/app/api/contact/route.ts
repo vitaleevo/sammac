@@ -1,0 +1,1 @@
+import { NextRequest,NextResponse } from "next/server";import { submitInquiry } from "@/lib/submit-inquiry";export async function POST(req:NextRequest){const r=await submitInquiry(await req.json(),req.headers.get("x-forwarded-for")?.split(",")[0]||"local");return NextResponse.json(r,{status:r.status})}

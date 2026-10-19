@@ -1,4 +1,6 @@
 allowBuilds:
-  unrs-resolver: true
+  esbuild: true
+  unrs-resolver: set this to true or false
 onlyBuiltDependencies:
   - unrs-resolver
+  - esbuild
