@@ -9,6 +9,7 @@
  */
 
 import type * as content from "../content.js";
+import type * as rateLimits from "../rateLimits.js";
 
 import type {
   ApiFromModules,
@@ -18,6 +19,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   content: typeof content;
+  rateLimits: typeof rateLimits;
 }>;
 
 /**

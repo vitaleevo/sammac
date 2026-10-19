@@ -5,8 +5,12 @@ const COOKIE = "sammac_admin";
 
 type Payload = { email: string; exp: number };
 
-function b64(input: string) { return Buffer.from(input).toString("base64url"); }
-function unb64(input: string) { return Buffer.from(input, "base64url").toString("utf8"); }
+function b64(input: string) {
+  return Buffer.from(input).toString("base64url");
+}
+function unb64(input: string) {
+  return Buffer.from(input, "base64url").toString("utf8");
+}
 function secret() {
   const value = process.env.ADMIN_SESSION_SECRET;
   if (!value) throw new Error("ADMIN_SESSION_SECRET não configurado");
@@ -20,7 +24,10 @@ export function verifyPassword(password: string) {
   if (!salt || !hash) return false;
   const calculated = scryptSync(password, salt, 64);
   const expected = Buffer.from(hash, "hex");
-  return calculated.length === expected.length && timingSafeEqual(calculated, expected);
+  return (
+    calculated.length === expected.length &&
+    timingSafeEqual(calculated, expected)
+  );
 }
 
 export function createSession(email: string) {
@@ -34,14 +41,24 @@ export function verifySession(token?: string | null): Payload | null {
   if (!token) return null;
   const [body, signature] = token.split(".");
   if (!body || !signature) return null;
-  const expected = createHmac("sha256", secret()).update(body).digest("base64url");
-  const a = Buffer.from(signature); const b = Buffer.from(expected);
+  const expected = createHmac("sha256", secret())
+    .update(body)
+    .digest("base64url");
+  const a = Buffer.from(signature);
+  const b = Buffer.from(expected);
   if (a.length !== b.length || !timingSafeEqual(a, b)) return null;
   try {
     const payload = JSON.parse(unb64(body)) as Payload;
-    if (!payload.email || payload.exp < Date.now()) return null;
+    if (
+      payload.email !== process.env.ADMIN_EMAIL?.toLowerCase() ||
+      !Number.isFinite(payload.exp) ||
+      payload.exp < Date.now()
+    )
+      return null;
     return payload;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 export async function getAdminSession() {

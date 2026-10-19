@@ -1,4 +1,83 @@
-import { Resend } from "resend";import { convex } from "@/lib/convex-server";import { api } from "../../convex/_generated/api";import { inquirySchema } from "@/lib/validation";
-const hits=new Map<string,{n:number,t:number}>();
-function allowed(ip:string){const now=Date.now();const x=hits.get(ip);if(!x||now-x.t>10*60_000){hits.set(ip,{n:1,t:now});return true}if(x.n>=5)return false;x.n++;return true}
-export async function submitInquiry(body:unknown,ip:string){if(!allowed(ip))return {ok:false,status:429,error:"Muitos pedidos. Tente novamente mais tarde."};const parsed=inquirySchema.safeParse(body);if(!parsed.success)return {ok:false,status:400,error:"Dados inválidos."};if(parsed.data.website)return {ok:true,status:200};const secret=process.env.ADMIN_WRITE_SECRET;if(!secret||!convex)return {ok:false,status:503,error:"Serviço temporariamente indisponível."};const d=parsed.data;await convex.mutation(api.content.createInquiry,{secret,type:d.type,name:d.name,email:d.email,phone:d.phone,organization:d.organization||undefined,subject:d.subject||undefined,interest:d.interest||undefined,preferredDate:d.preferredDate||undefined,message:d.message});const key=process.env.RESEND_API_KEY;if(key){try{const resend=new Resend(key);await resend.emails.send({from:process.env.EMAIL_FROM||"SAMMAC <info@sammac.ao>",to:[process.env.EMAIL_TO||"info@sammac.ao"],replyTo:d.email,subject:`SAMMAC — novo pedido: ${d.type} — ${d.name}`,text:`Nome: ${d.name}\nE-mail: ${d.email}\nTelefone: ${d.phone}\nEmpresa: ${d.organization}\nInteresse: ${d.interest}\nData preferida: ${d.preferredDate}\n\nMensagem:\n${d.message}`})}catch(e){console.error("Resend error",e)}}return {ok:true,status:201}}
+import { Resend } from "resend";
+import { convex } from "@/lib/convex-server";
+import { api } from "../../convex/_generated/api";
+import { inquirySchema } from "@/lib/validation";
+import { consumeLimit } from "./rate-limit";
+export async function submitInquiry(body: unknown, ip: string) {
+  const parsed = inquirySchema.safeParse(body);
+  if (!parsed.success)
+    return {
+      ok: false,
+      status: 400,
+      error: "Verifique os dados do formulário.",
+    };
+  if (!(await consumeLimit("inquiry", ip, 5, 10 * 60_000)))
+    return {
+      ok: false,
+      status: 429,
+      error: "Muitos pedidos. Tente novamente mais tarde.",
+    };
+  const secret = process.env.ADMIN_WRITE_SECRET;
+  if (!secret || !convex)
+    return {
+      ok: false,
+      status: 503,
+      error: "Serviço temporariamente indisponível.",
+    };
+  const d = parsed.data;
+  const id = await convex.mutation(api.content.createInquiry, {
+    secret,
+    type: d.type,
+    name: d.name,
+    email: d.email,
+    phone: d.phone,
+    organization: d.organization || undefined,
+    subject: d.subject || undefined,
+    interest: d.interest || undefined,
+    preferredDate: d.preferredDate || undefined,
+    message: d.message,
+  });
+  const key = process.env.RESEND_API_KEY;
+  if (key) {
+    const resend = new Resend(key);
+    try {
+      const { error } = await resend.emails.send(
+        {
+          from: process.env.EMAIL_FROM || "SAMMAC <info@sammac.ao>",
+          to: [process.env.EMAIL_TO || "info@sammac.ao"],
+          replyTo: d.email,
+          subject: "SAMMAC — novo pedido: " + d.type + " — " + d.name,
+          text: [
+            "Nome: " + d.name,
+            "E-mail: " + d.email,
+            "Telefone: " + d.phone,
+            "Empresa: " + d.organization,
+            "Interesse: " + d.interest,
+            "Data preferida: " + d.preferredDate,
+            "Mensagem:",
+            d.message,
+            "Consultar pedidos: https://sammac.ao/backoffice",
+          ].join("\n"),
+        },
+        { idempotencyKey: "inquiry/" + id },
+      );
+      if (error)
+        console.error(
+          JSON.stringify({
+            event: "notification_failed",
+            inquiryId: id,
+            code: error.name,
+          }),
+        );
+    } catch {
+      console.error(
+        JSON.stringify({
+          event: "notification_failed",
+          inquiryId: id,
+          code: "network",
+        }),
+      );
+    }
+  }
+  return { ok: true, status: 201 };
+}

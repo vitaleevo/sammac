@@ -1,1 +1,7 @@
-import { redirect } from "next/navigation";import { getAdminSession } from "@/lib/auth";import { AdminLogin } from "@/components/admin-login";export default async function Page(){if(await getAdminSession())redirect("/backoffice");return <AdminLogin/>}
+import { redirect } from "next/navigation";
+import { getAdminSession } from "@/lib/auth";
+import { AdminLogin } from "@/components/admin-login";
+export default async function Page() {
+  if (await getAdminSession()) redirect("/backoffice");
+  return <AdminLogin />;
+}

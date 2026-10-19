@@ -1,2 +1,14 @@
 import type { MetadataRoute } from "next";
-export default function manifest():MetadataRoute.Manifest{return {name:"SAMMAC — Centro Técnico de Treinamento",short_name:"SAMMAC",description:"Formação Técnica & Soluções Industriais",start_url:"/",display:"standalone",background_color:"#07132f",theme_color:"#07132f",orientation:"portrait-primary",icons:[{src:"/brand/sammac-mark.png",sizes:"any",type:"image/png"}]}}
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "SAMMAC — Centro Técnico de Treinamento",
+    short_name: "SAMMAC",
+    description: "Formação Técnica & Soluções Industriais",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#07132f",
+    theme_color: "#07132f",
+    orientation: "portrait-primary",
+    icons: [{ src: "/brand/sammac-mark.png", sizes: "any", type: "image/png" }],
+  };
+}

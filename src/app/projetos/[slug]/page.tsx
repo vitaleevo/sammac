@@ -1,2 +1,51 @@
-import Image from "next/image";import Link from "next/link";import { notFound } from "next/navigation";import { ArrowLeft } from "lucide-react";import { getProject } from "@/lib/convex-server";
-export default async function Page({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const p:any=await getProject(slug);if(!p)notFound();return <article className="pb-20 pt-20"><div className="relative min-h-[55vh] bg-[#07132f]"><Image src={p.image||"/images/factory-tech.jpg"} alt={p.title} fill priority className="object-cover opacity-55"/><div className="absolute inset-0 bg-[#07132f]/55"/><div className="container-x relative flex min-h-[55vh] items-end pb-12 pt-28 text-white"><div className="max-w-4xl"><Link href="/projetos" className="mb-5 inline-flex items-center gap-2 text-sm font-bold"><ArrowLeft size={17}/>Projetos</Link><p className="eyebrow !text-red-300">{p.category||"Projeto SAMMAC"}</p><h1 className="mt-3 text-4xl font-black tracking-tight sm:text-6xl">{p.title}</h1><p className="mt-5 max-w-3xl text-lg text-slate-200">{p.summary}</p></div></div></div><div className="container-x mt-12"><div className="prose prose-slate mx-auto max-w-4xl whitespace-pre-wrap text-base leading-8 text-slate-700">{p.content}</div></div></article>}
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import { getProject } from "@/lib/convex-server";
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const p = await getProject(slug);
+  if (!p) notFound();
+  return (
+    <article className="pb-20 pt-20">
+      <div className="relative min-h-[55vh] bg-[#07132f]">
+        <Image
+          src={p.image || "/images/factory-tech.jpg"}
+          alt={p.title}
+          fill
+          priority
+          className="object-cover opacity-55"
+        />
+        <div className="absolute inset-0 bg-[#07132f]/55" />
+        <div className="container-x relative flex min-h-[55vh] items-end pb-12 pt-28 text-white">
+          <div className="max-w-4xl">
+            <Link
+              href="/projetos"
+              className="mb-5 inline-flex items-center gap-2 text-sm font-bold"
+            >
+              <ArrowLeft size={17} />
+              Projetos
+            </Link>
+            <p className="eyebrow !text-red-300">
+              {p.category || "Projeto SAMMAC"}
+            </p>
+            <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-6xl">
+              {p.title}
+            </h1>
+            <p className="mt-5 max-w-3xl text-lg text-slate-200">{p.summary}</p>
+          </div>
+        </div>
+      </div>
+      <div className="container-x mt-12">
+        <div className="prose prose-slate mx-auto max-w-4xl whitespace-pre-wrap text-base leading-8 text-slate-700">
+          {p.content}
+        </div>
+      </div>
+    </article>
+  );
+}

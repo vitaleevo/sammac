@@ -1,18 +1,352 @@
+export const revalidate = 60;
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CalendarDays, Cog, Flame, GraduationCap, HardHat, HousePlug, ShieldCheck, Users, Wrench, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  CalendarDays,
+  Cog,
+  Flame,
+  GraduationCap,
+  HardHat,
+  HousePlug,
+  ShieldCheck,
+  Wrench,
+  Zap,
+} from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { LeadForm } from "@/components/forms";
 import { defaultCourses, services, site } from "@/lib/site";
 import { getCourses, getPosts, getProjects } from "@/lib/convex-server";
 
-const iconMap={Cog,Zap,HousePlug,Flame};
-export default async function Home(){const [remoteCourses,posts,projects]=await Promise.all([getCourses(),getPosts(3),getProjects(3)]);const courses=remoteCourses.length?remoteCourses:defaultCourses;return <>
-<section className="relative isolate min-h-[92dvh] overflow-hidden bg-[#07132f] text-white"><Image src="/images/factory-tech.jpg" alt="Técnico em ambiente industrial" fill priority className="object-cover object-center opacity-55" sizes="100vw"/><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,12,33,.97)_0%,rgba(4,12,33,.78)_50%,rgba(4,12,33,.28)_100%)]"/><div className="relative mx-auto grid min-h-[92dvh] max-w-7xl items-center gap-10 px-5 pb-14 pt-28 md:grid-cols-[1.15fr_.85fr] md:px-8"><div><p className="eyebrow !text-red-300">Centro Técnico de Treinamento</p><h1 className="mt-5 max-w-4xl text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-6xl lg:text-7xl">Formação técnica que prepara para o <span className="text-[#ff3f45]">trabalho real.</span></h1><p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">Capacitamos pessoas e apoiamos empresas com soluções práticas em automação industrial, electricidade residencial e industrial, soldadura e áreas técnicas afins.</p><div className="mt-8 flex flex-wrap gap-3"><Link href="/formacoes" className="rounded-xl bg-[#ef3036] px-6 py-3.5 font-black text-white">Explorar formações</Link><Link href="/agendar" className="rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 font-black backdrop-blur">Solicitar atendimento</Link></div><div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-200"><span className="flex items-center gap-2"><BadgeCheck size={18} className="text-red-400"/>Formação prática</span><span className="flex items-center gap-2"><ShieldCheck size={18} className="text-red-400"/>Segurança primeiro</span><span className="flex items-center gap-2"><HardHat size={18} className="text-red-400"/>Foco profissional</span></div></div><Reveal className="hidden md:block"><div className="ml-auto max-w-md rounded-[32px] border border-white/15 bg-white/10 p-4 shadow-2xl backdrop-blur-xl"><div className="relative aspect-[4/5] overflow-hidden rounded-[24px]"><Image src="/images/technician-black.jpg" alt="Técnico em formação" fill className="object-cover" sizes="420px"/></div><div className="grid grid-cols-2 gap-3 pt-4"><div className="rounded-2xl bg-white/10 p-4"><GraduationCap/><p className="mt-2 text-sm font-black">Treinamento técnico</p></div><div className="rounded-2xl bg-[#ef3036] p-4"><Wrench/><p className="mt-2 text-sm font-black">Soluções industriais</p></div></div></div></Reveal></div></section>
-<section className="border-b border-slate-200 bg-white"><div className="container-x grid grid-cols-2 divide-x divide-y divide-slate-200 md:grid-cols-4 md:divide-y-0">{[["04+","Áreas técnicas"],["100%","Foco prático"],["B2C + B2B","Pessoas e empresas"],["AO","Atuação em Angola"]].map(([a,b])=><div key={b} className="px-4 py-7 text-center"><strong className="text-2xl font-black text-[#07132f]">{a}</strong><p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">{b}</p></div>)}</div></section>
-<section className="section-pad bg-[#f5f7fb]"><div className="container-x"><Reveal><p className="eyebrow">O que fazemos</p><div className="mt-3 flex flex-col justify-between gap-5 md:flex-row md:items-end"><h2 className="section-title max-w-3xl">Competência técnica para pessoas, negócios e indústria.</h2><Link href="/servicos" className="flex items-center gap-2 font-black text-[#ef3036]">Todos os serviços <ArrowRight size={18}/></Link></div></Reveal><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{services.map((s,i)=>{const Icon=iconMap[s.icon as keyof typeof iconMap];return <Reveal key={s.title} delay={i*.06}><article className="card-lift h-full overflow-hidden rounded-[26px] bg-white shadow-sm"><div className="relative aspect-[16/10]"><Image src={s.image} alt={s.title} fill className="object-cover" sizes="(max-width:768px) 100vw,25vw"/><div className="absolute inset-0 bg-[#07132f]/25"/></div><div className="p-6"><div className="grid h-11 w-11 place-items-center rounded-xl bg-red-50 text-[#ef3036]"><Icon size={22}/></div><h3 className="mt-4 text-xl font-black">{s.title}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{s.text}</p></div></article></Reveal>})}</div></div></section>
-<section className="section-pad overflow-hidden bg-white"><div className="container-x grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><Reveal><div className="relative min-h-[480px] overflow-hidden rounded-[34px]"><Image src="/images/welding-black.jpg" alt="Formação técnica de soldadura" fill className="object-cover" sizes="(max-width:1024px) 100vw,45vw"/><div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-[#07132f]/90 p-5 text-white backdrop-blur"><p className="text-sm font-bold text-red-300">SAMMAC Escola Técnica</p><p className="mt-1 text-xl font-black">Aprenda. Pratique. Profissionalize-se.</p></div></div></Reveal><div><p className="eyebrow">Formações</p><h2 className="section-title mt-3">Uma escola orientada para competências que o mercado usa.</h2><p className="mt-5 max-w-2xl leading-7 text-slate-600">As formações combinam fundamentos, demonstração técnica, prática supervisionada e cultura de segurança. Consulte as turmas disponíveis e manifeste o seu interesse.</p><div className="mt-7 grid gap-3 sm:grid-cols-2">{courses.slice(0,4).map((c:any)=><Link href="/formacoes" key={c.title} className="rounded-2xl border border-slate-200 p-4 transition hover:border-red-200 hover:bg-red-50"><p className="text-xs font-black uppercase tracking-wider text-[#ef3036]">{c.category}</p><h3 className="mt-1 font-black text-[#07132f]">{c.title}</h3><p className="mt-2 text-xs text-slate-500">{c.duration || "Consultar calendário"} · {c.modality || "Presencial"}</p></Link>)}</div><Link href="/formacoes" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#07132f] px-5 py-3 font-black text-white">Calendário de cursos <CalendarDays size={18}/></Link></div></div></section>
-<section className="section-pad bg-[#07132f] text-white"><div className="container-x grid gap-10 lg:grid-cols-2"><div><p className="eyebrow !text-red-300">Atendimento técnico</p><h2 className="section-title mt-3">Precisas de um serviço, formação para equipa ou diagnóstico?</h2><p className="mt-5 max-w-xl leading-7 text-slate-300">Explica o que procuras. A SAMMAC analisa o pedido e entra em contacto para indicar o próximo passo adequado.</p><div className="mt-7 grid gap-3 sm:grid-cols-2"><a href={site.phoneHref} className="rounded-2xl bg-white/8 p-4"><p className="text-xs text-slate-400">Telefone / WhatsApp</p><strong className="mt-1 block">{site.phone}</strong></a><a href={`mailto:${site.email}`} className="rounded-2xl bg-white/8 p-4"><p className="text-xs text-slate-400">E-mail</p><strong className="mt-1 block">{site.email}</strong></a></div></div><Reveal><div className="rounded-[30px] bg-white p-5 text-slate-900 md:p-7"><LeadForm type="service" compact/></div></Reveal></div></section>
-{projects.length>0&&<section className="section-pad bg-white"><div className="container-x"><div className="flex items-end justify-between gap-4"><div><p className="eyebrow">Projetos</p><h2 className="section-title mt-3">Trabalho técnico em destaque.</h2></div><Link href="/projetos" className="hidden font-black text-[#ef3036] md:block">Ver todos →</Link></div><div className="mt-9 grid gap-5 md:grid-cols-3">{projects.map((p:any)=><Link href={`/projetos/${p.slug}`} key={p._id} className="group overflow-hidden rounded-3xl border border-slate-200"><div className="relative aspect-[4/3]"><Image src={p.image||"/images/control-panel.jpg"} alt={p.title} fill className="object-cover transition duration-500 group-hover:scale-105"/></div><div className="p-5"><p className="text-xs font-black uppercase text-[#ef3036]">{p.category}</p><h3 className="mt-2 text-xl font-black">{p.title}</h3><p className="mt-2 line-clamp-2 text-sm text-slate-600">{p.summary}</p></div></Link>)}</div></div></section>}
-{posts.length>0&&<section className="section-pad bg-[#f5f7fb]"><div className="container-x"><p className="eyebrow">Conteúdo técnico</p><h2 className="section-title mt-3">Do blog SAMMAC.</h2><div className="mt-9 grid gap-5 md:grid-cols-3">{posts.map((p:any)=><Link href={`/blog/${p.slug}`} key={p._id} className="rounded-3xl bg-white p-6 shadow-sm"><p className="text-xs font-black uppercase text-[#ef3036]">{p.category||"Artigo"}</p><h3 className="mt-3 text-xl font-black">{p.title}</h3><p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{p.excerpt}</p><span className="mt-5 inline-flex items-center gap-2 text-sm font-black">Ler artigo <ArrowRight size={16}/></span></Link>)}</div></div></section>}
-</>}
+const iconMap = { Cog, Zap, HousePlug, Flame };
+export default async function Home() {
+  const [remoteCourses, posts, projects] = await Promise.all([
+    getCourses(),
+    getPosts(3),
+    getProjects(3),
+  ]);
+  const courses: Array<{
+    title: string;
+    category: string;
+    duration?: string;
+    modality?: string;
+  }> = remoteCourses.length ? remoteCourses : defaultCourses;
+  return (
+    <>
+      <section className="relative isolate min-h-[92dvh] overflow-hidden bg-[#07132f] text-white">
+        <Image
+          src="/images/factory-tech.jpg"
+          alt="Técnico em ambiente industrial"
+          fill
+          priority
+          fetchPriority="high"
+          className="object-cover object-center opacity-55"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,12,33,.97)_0%,rgba(4,12,33,.78)_50%,rgba(4,12,33,.28)_100%)]" />
+        <div className="relative mx-auto grid min-h-[92dvh] max-w-7xl items-center gap-10 px-5 pb-14 pt-28 md:grid-cols-[1.15fr_.85fr] md:px-8">
+          <div>
+            <p className="eyebrow !text-red-300">
+              Centro Técnico de Treinamento
+            </p>
+            <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-6xl lg:text-7xl">
+              Formação técnica que prepara para o{" "}
+              <span className="text-[#ff3f45]">trabalho real.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
+              Capacitamos pessoas e apoiamos empresas com soluções práticas em
+              automação industrial, electricidade residencial e industrial,
+              soldadura e áreas técnicas afins.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/formacoes"
+                className="rounded-xl bg-[#d51f28] px-6 py-3.5 font-black text-white"
+              >
+                Explorar formações
+              </Link>
+              <Link
+                href="/agendar"
+                className="rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 font-black backdrop-blur"
+              >
+                Solicitar atendimento
+              </Link>
+            </div>
+            <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-200">
+              <span className="flex items-center gap-2">
+                <BadgeCheck size={18} className="text-red-400" />
+                Formação prática
+              </span>
+              <span className="flex items-center gap-2">
+                <ShieldCheck size={18} className="text-red-400" />
+                Segurança primeiro
+              </span>
+              <span className="flex items-center gap-2">
+                <HardHat size={18} className="text-red-400" />
+                Foco profissional
+              </span>
+            </div>
+          </div>
+          <Reveal className="hidden md:block">
+            <div className="ml-auto max-w-md rounded-[32px] border border-white/15 bg-white/10 p-4 shadow-2xl backdrop-blur-xl">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[24px]">
+                <Image
+                  src="/images/technician-black.jpg"
+                  alt="Técnico em formação"
+                  fill
+                  className="object-cover"
+                  sizes="420px"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3 pt-4">
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <GraduationCap />
+                  <p className="mt-2 text-sm font-black">Treinamento técnico</p>
+                </div>
+                <div className="rounded-2xl bg-[#d51f28] p-4">
+                  <Wrench />
+                  <p className="mt-2 text-sm font-black">
+                    Soluções industriais
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+      <section className="border-b border-slate-200 bg-white">
+        <div className="container-x grid grid-cols-2 divide-x divide-y divide-slate-200 md:grid-cols-4 md:divide-y-0">
+          {[
+            ["04+", "Áreas técnicas"],
+            ["100%", "Foco prático"],
+            ["B2C + B2B", "Pessoas e empresas"],
+            ["AO", "Atuação em Angola"],
+          ].map(([a, b]) => (
+            <div key={b} className="px-4 py-7 text-center">
+              <strong className="text-2xl font-black text-[#07132f]">
+                {a}
+              </strong>
+              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                {b}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="section-pad bg-[#f5f7fb]">
+        <div className="container-x">
+          <Reveal>
+            <p className="eyebrow">O que fazemos</p>
+            <div className="mt-3 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <h2 className="section-title max-w-3xl">
+                Competência técnica para pessoas, negócios e indústria.
+              </h2>
+              <Link
+                href="/servicos"
+                className="flex items-center gap-2 font-black text-[#d51f28]"
+              >
+                Todos os serviços <ArrowRight size={18} />
+              </Link>
+            </div>
+          </Reveal>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {services.map((s, i) => {
+              const Icon = iconMap[s.icon as keyof typeof iconMap];
+              return (
+                <Reveal key={s.title} delay={i * 0.06}>
+                  <article className="card-lift h-full overflow-hidden rounded-[26px] bg-white shadow-sm">
+                    <div className="relative aspect-[16/10]">
+                      <Image
+                        src={s.image}
+                        alt={s.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width:768px) 100vw,25vw"
+                      />
+                      <div className="absolute inset-0 bg-[#07132f]/25" />
+                    </div>
+                    <div className="p-6">
+                      <div className="grid h-11 w-11 place-items-center rounded-xl bg-red-50 text-[#d51f28]">
+                        <Icon size={22} />
+                      </div>
+                      <h3 className="mt-4 text-xl font-black">{s.title}</h3>
+                      <p className="mt-3 text-sm leading-6 text-slate-600">
+                        {s.text}
+                      </p>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="section-pad overflow-hidden bg-white">
+        <div className="container-x grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+          <Reveal>
+            <div className="relative min-h-[480px] overflow-hidden rounded-[34px]">
+              <Image
+                src="/images/welding-black.jpg"
+                alt="Formação técnica de soldadura"
+                fill
+                className="object-cover"
+                sizes="(max-width:1024px) 100vw,45vw"
+              />
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-[#07132f]/90 p-5 text-white backdrop-blur">
+                <p className="text-sm font-bold text-red-300">
+                  SAMMAC Escola Técnica
+                </p>
+                <p className="mt-1 text-xl font-black">
+                  Aprenda. Pratique. Profissionalize-se.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+          <div>
+            <p className="eyebrow">Formações</p>
+            <h2 className="section-title mt-3">
+              Uma escola orientada para competências que o mercado usa.
+            </h2>
+            <p className="mt-5 max-w-2xl leading-7 text-slate-600">
+              As formações combinam fundamentos, demonstração técnica, prática
+              supervisionada e cultura de segurança. Consulte as turmas
+              disponíveis e manifeste o seu interesse.
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              {courses.slice(0, 4).map((c) => (
+                <Link
+                  href="/formacoes"
+                  key={c.title}
+                  className="rounded-2xl border border-slate-200 p-4 transition hover:border-red-200 hover:bg-red-50"
+                >
+                  <p className="text-xs font-black uppercase tracking-wider text-[#d51f28]">
+                    {c.category}
+                  </p>
+                  <h3 className="mt-1 font-black text-[#07132f]">{c.title}</h3>
+                  <p className="mt-2 text-xs text-slate-500">
+                    {c.duration || "Consultar calendário"} ·{" "}
+                    {c.modality || "Presencial"}
+                  </p>
+                </Link>
+              ))}
+            </div>
+            <Link
+              href="/formacoes"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#07132f] px-5 py-3 font-black text-white"
+            >
+              Calendário de cursos <CalendarDays size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="section-pad bg-[#07132f] text-white">
+        <div className="container-x grid gap-10 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow !text-red-300">Atendimento técnico</p>
+            <h2 className="section-title mt-3">
+              Precisas de um serviço, formação para equipa ou diagnóstico?
+            </h2>
+            <p className="mt-5 max-w-xl leading-7 text-slate-300">
+              Explica o que procuras. A SAMMAC analisa o pedido e entra em
+              contacto para indicar o próximo passo adequado.
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              <a href={site.phoneHref} className="rounded-2xl bg-white/8 p-4">
+                <p className="text-xs text-slate-400">Telefone / WhatsApp</p>
+                <strong className="mt-1 block">{site.phone}</strong>
+              </a>
+              <a
+                href={`mailto:${site.email}`}
+                className="rounded-2xl bg-white/8 p-4"
+              >
+                <p className="text-xs text-slate-400">E-mail</p>
+                <strong className="mt-1 block">{site.email}</strong>
+              </a>
+            </div>
+          </div>
+          <Reveal>
+            <div className="rounded-[30px] bg-white p-5 text-slate-900 md:p-7">
+              <LeadForm type="service" compact />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+      {projects.length > 0 && (
+        <section className="section-pad bg-white">
+          <div className="container-x">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="eyebrow">Projetos</p>
+                <h2 className="section-title mt-3">
+                  Trabalho técnico em destaque.
+                </h2>
+              </div>
+              <Link
+                href="/projetos"
+                className="hidden font-black text-[#d51f28] md:block"
+              >
+                Ver todos →
+              </Link>
+            </div>
+            <div className="mt-9 grid gap-5 md:grid-cols-3">
+              {projects.map((p) => (
+                <Link
+                  href={`/projetos/${p.slug}`}
+                  key={p._id}
+                  className="group overflow-hidden rounded-3xl border border-slate-200"
+                >
+                  <div className="relative aspect-[4/3]">
+                    <Image
+                      src={p.image || "/images/control-panel.jpg"}
+                      alt={p.title}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <p className="text-xs font-black uppercase text-[#d51f28]">
+                      {p.category}
+                    </p>
+                    <h3 className="mt-2 text-xl font-black">{p.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm text-slate-600">
+                      {p.summary}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      {posts.length > 0 && (
+        <section className="section-pad bg-[#f5f7fb]">
+          <div className="container-x">
+            <p className="eyebrow">Conteúdo técnico</p>
+            <h2 className="section-title mt-3">Do blog SAMMAC.</h2>
+            <div className="mt-9 grid gap-5 md:grid-cols-3">
+              {posts.map((p) => (
+                <Link
+                  href={`/blog/${p.slug}`}
+                  key={p._id}
+                  className="rounded-3xl bg-white p-6 shadow-sm"
+                >
+                  <p className="text-xs font-black uppercase text-[#d51f28]">
+                    {p.category || "Artigo"}
+                  </p>
+                  <h3 className="mt-3 text-xl font-black">{p.title}</h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+                    {p.excerpt}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-black">
+                    Ler artigo <ArrowRight size={16} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  );
+}

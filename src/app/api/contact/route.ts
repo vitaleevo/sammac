@@ -1,1 +1,12 @@
-import { NextRequest,NextResponse } from "next/server";import { submitInquiry } from "@/lib/submit-inquiry";export async function POST(req:NextRequest){const r=await submitInquiry(await req.json(),req.headers.get("x-forwarded-for")?.split(",")[0]||"local");return NextResponse.json(r,{status:r.status})}
+import { NextRequest, NextResponse } from "next/server";
+import { submitInquiry } from "@/lib/submit-inquiry";
+import { readJson, withRequestLog } from "@/lib/http";
+export async function POST(req: NextRequest) {
+  return withRequestLog(req, async () => {
+    const result = await submitInquiry(
+      await readJson(req, 16_384),
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local",
+    );
+    return NextResponse.json(result, { status: result.status });
+  });
+}
