@@ -64,3 +64,22 @@ Alteração de esquema adicional, sem remoção de tabelas existentes. A cópia 
 Normalização partilhada de endereços em cliente e servidor. Verificados 18 cenários de schema (incluindo estado Publicado e preservação da imagem/conteúdo) e quatro cenários de API em rascunhos temporários removidos após teste. Lint, TypeScript e build aprovados. Não foram alteradas permissões nem a estrutura da base de dados.
 
 Revisão manual do editor: UX 93, UI 93, acessibilidade 93, consistência 94, conversão 92. Performance e escalabilidade não foram novamente medidas nesta correção; os resultados e limites anteriores continuam descritos acima. Campos rotulados, ajuda associada e erro com role=alert, sem diálogo nativo bloqueante.
+
+## Cartão digital — 20/10/2026
+
+Endereço: https://links.sammac.ao. Commit de implementação c594b4b; publicação automática Vercel confirmada no estado do commit GitHub e no navegador público. DNS A 76.76.21.21, TTL 300, configurado no Zone Editor cPanel.
+
+Verificação realizada:
+- Build Next.js de produção, lint e TypeScript aprovados; zero segredos locais encontrados nos ficheiros enviados ao Git.
+- Cartão testado em 320, 390, 768, 1024 e 1440 px, com imagens carregadas, sem overflow e com um único main.
+- Cinco destinos de plataformas comparados com os endereços fornecidos; WhatsApp/telefone/e-mail configurados.
+- Cópia real para clipboard, feedback, partilha por alternativa de cópia e download de SAMMAC.vcf aprovados. Partilha nativa e importação na agenda devem ser experimentadas num dispositivo real; o navegador de laboratório verificou a alternativa e o ficheiro.
+- Rewrite por hostname aprovado. Oito páginas institucionais, navegação móvel e resposta 401 da API administrativa sem sessão confirmadas.
+- Produção HTTPS: raiz do subdomínio, vCard, imagem Open Graph e site principal com resposta 200. Botões móveis de pelo menos 44 px; cópia do link e ausência de erros JavaScript confirmadas.
+- Evidências locais em output/playwright/cartao-online-desktop.png, cartao-online-mobile.png e lighthouse-card.json (ignoradas pelo Git).
+
+Scorecard do cartão (0–100): UX 95, UI 94, acessibilidade 100, desempenho 91, consistência 95, conversão 94, escalabilidade 94. Acessibilidade e desempenho são medições Lighthouse; os demais são avaliação de implementação e browser. Classificação: Production Ready.
+
+Lighthouse mobile sobre build local: desempenho 91, acessibilidade 100, boas práticas 100 e SEO 100; LCP 3,1 s, CLS 0 e TBT 190 ms. A primeira recolha falhou por NO_NAVSTART; a segunda terminou sem erro. O desempenho fica abaixo da meta 95 e LCP 2,5 s: o próximo ajuste deve concentrar-se no elemento LCP identificado no relatório e validar o ganho no alojamento real. Não representa medição de utilizadores reais nem aprovação de todas as tecnologias assistivas.
+
+Próximo passo: colocar https://links.sammac.ao nas bios e assinaturas do centro.

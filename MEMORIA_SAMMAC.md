@@ -69,5 +69,6 @@ Resultado final de laboratório: Lighthouse mobile 87 desempenho, 100 acessibili
 - Rewrite de `/` condicionado ao host `links.sammac.ao`; site principal mantém a página inicial institucional. Links para serviços/formações usam URLs absolutas do domínio principal.
 - Vercel: subdomínio adicionado ao projecto `sammac`. DNS cPanel: A `links.sammac.ao` → `76.76.21.21`, TTL 300; gravação confirmada no painel e resolução pública confirmada.
 - Build, lint e TypeScript aprovados. Browser sobre build de produção: cinco larguras (320/390/768/1024/1440), destinos sociais exactos, imagens, copiar link, download SAMMAC.vcf, Open Graph e rewrite por host aprovados. Oito páginas institucionais verificadas com cabeçalho/rodapé e sem erros JavaScript.
-- Publicação de produção e verificação final HTTPS em curso; actualizar este registo após conclusão.
-- Próximo passo: usar o endereço do cartão nas bios, assinaturas e materiais do centro quando a publicação estiver confirmada.
+- Publicado no GitHub (commit c594b4b) e na Vercel via integração Git (check success; deployment CH8vk2mnHDTK6mx9ta2KkSYsfPG3). https://links.sammac.ao confirmado por HTTPS: cartão na raiz, contacto e imagem social 200, cópia funcional, sem overflow a 320 px nem erros JavaScript; sammac.ao mantém a página institucional.
+- Próximo passo: usar o endereço do cartão nas bios, assinaturas e materiais do centro ; publicação confirmada.
+
