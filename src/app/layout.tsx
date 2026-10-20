@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { MobileDock } from "@/components/mobile-dock";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 export const metadata: Metadata = {
@@ -48,12 +45,7 @@ export default function RootLayout({
         <a className="skip-link" href="#conteudo">
           Saltar para o conteúdo
         </a>
-        <SiteHeader />
-        <main id="conteudo" className="min-h-dvh">
-          {children}
-        </main>
-        <SiteFooter />
-        <MobileDock />
+        {children}
       </body>
     </html>
   );

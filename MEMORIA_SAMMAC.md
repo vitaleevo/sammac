@@ -59,3 +59,15 @@ Resultado final de laboratório: Lighthouse mobile 87 desempenho, 100 acessibili
 - Validação mantém autorização, estado, imagem e conteúdo. Erros do editor aparecem em português no formulário e libertam o botão Guardar.
 - Verificação: 18 testes de regressão de publicação, quatro cenários reais de API em rascunhos privados (artigos/projetos com endereço manual/em branco), lint, TypeScript e build aprovados. Rascunhos de teste removidos.
 - Comandos: `pnpm test:publication`; `node --env-file=.env.local scripts/verify-publication.mjs` (respeita `TEST_BASE_URL`).
+
+## Cartão digital — 20 de outubro de 2026
+
+- Nova página independente em `/links`, com domínio público pretendido `https://links.sammac.ao`.
+- Facebook, Instagram, TikTok, LinkedIn fornecido pelo proprietário, site oficial, WhatsApp, telefone, e-mail e atalhos de formações/serviços.
+- Guardar contacto vCard, copiar link, partilha nativa com alternativa por cópia, feedback acessível e imagem Open Graph gerada estaticamente.
+- Rotas institucionais movidas sem alteração de conteúdo para `(institucional)` para manter cabeçalho/rodapé próprios. Backoffice e cartão possuem layouts separados. URLs existentes preservadas.
+- Rewrite de `/` condicionado ao host `links.sammac.ao`; site principal mantém a página inicial institucional. Links para serviços/formações usam URLs absolutas do domínio principal.
+- Vercel: subdomínio adicionado ao projecto `sammac`. DNS cPanel: A `links.sammac.ao` → `76.76.21.21`, TTL 300; gravação confirmada no painel e resolução pública confirmada.
+- Build, lint e TypeScript aprovados. Browser sobre build de produção: cinco larguras (320/390/768/1024/1440), destinos sociais exactos, imagens, copiar link, download SAMMAC.vcf, Open Graph e rewrite por host aprovados. Oito páginas institucionais verificadas com cabeçalho/rodapé e sem erros JavaScript.
+- Publicação de produção e verificação final HTTPS em curso; actualizar este registo após conclusão.
+- Próximo passo: usar o endereço do cartão nas bios, assinaturas e materiais do centro quando a publicação estiver confirmada.

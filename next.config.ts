@@ -2,6 +2,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          has: [{ type: "host", value: "links.sammac.ao" }],
+          destination: "/links",
+        },
+      ],
+    };
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "amiable-rabbit-725.convex.cloud" },

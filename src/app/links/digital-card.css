@@ -1,0 +1,478 @@
+.digital-page {
+  min-height: 100dvh;
+  padding: 32px 24px 16px;
+  background-color: #f5f7fb;
+  background-image:
+    linear-gradient(#22345f06 1px, transparent 1px),
+    linear-gradient(90deg, #22345f06 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: #07132f;
+}
+.digital-topline,
+.digital-footer {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.digital-topline {
+  margin-bottom: 24px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: #53617b;
+}
+.digital-topline > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+}
+.digital-card {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.3fr;
+  overflow: hidden;
+  border-radius: 32px;
+  border: 1px solid #dfe4ee;
+  background: white;
+  box-shadow: 0 24px 64px #07132f0d;
+}
+.digital-profile {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #07132f;
+  color: white;
+}
+.digital-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.digital-photo img {
+  object-fit: cover;
+  object-position: 45% center;
+  opacity: 0.6;
+}
+.digital-profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    #07132f14 0%,
+    #07132f80 35%,
+    #07132ff2 72%,
+    #07132f 100%
+  );
+}
+.digital-profile-content {
+  min-height: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+.digital-logo {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: white;
+}
+.digital-logo img {
+  width: 240px;
+  height: auto;
+}
+.digital-identity {
+  margin-top: auto;
+  padding-top: 128px;
+}
+.digital-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+.digital-identity .digital-eyebrow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #e2e8f0;
+  font-size: 9px;
+}
+.digital-identity .digital-eyebrow span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef5460;
+  flex-shrink: 0;
+}
+.digital-identity h1 {
+  margin-top: 24px;
+  font-size: clamp(28px, 2.5vw, 36px);
+  letter-spacing: -0.045em;
+  line-height: 1.17;
+  font-weight: 600;
+}
+.digital-identity h1 span {
+  color: #c3cfe6;
+}
+.digital-intro {
+  max-width: 320px;
+  margin-top: 24px;
+  color: #d1d9e8;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.digital-profile-bottom {
+  margin-top: 48px;
+  border-top: 1px solid #ffffff26;
+  padding-top: 24px;
+}
+.digital-profile-bottom p {
+  max-width: 240px;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #b5c1d8;
+  line-height: 1.8;
+}
+.digital-profile-bottom a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.digital-connections {
+  padding: 32px;
+}
+.digital-heading .digital-eyebrow {
+  color: #b01922;
+}
+.digital-heading h2 {
+  margin-top: 8px;
+  font-size: clamp(24px, 2.2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+.digital-heading > p:last-child {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #53617b;
+  line-height: 1.6;
+}
+.digital-whatsapp {
+  margin-top: 24px;
+  min-height: 80px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #d51f28;
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 8px 24px #d51f281f;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.digital-whatsapp:hover {
+  background: #b81821;
+  transform: translateY(-2px);
+}
+.digital-whatsapp > span,
+.digital-platform > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.digital-whatsapp strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+.digital-whatsapp small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #fff;
+}
+.digital-platforms {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  scroll-margin-top: 24px;
+}
+.digital-platform {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  min-height: 72px;
+  border: 1px solid #e2e7ef;
+  border-radius: 16px;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    transform 0.2s;
+}
+.digital-platform:hover {
+  border-color: #9caac2;
+  background: #f5f7fb;
+  transform: translateX(2px);
+}
+.digital-platform-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #edf1f7;
+  color: #22345f;
+}
+.digital-platform strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+.digital-platform small {
+  display: block;
+  margin-top: 4px;
+  color: #53617b;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.digital-platform > svg {
+  flex-shrink: 0;
+  color: #68758e;
+}
+.digital-platform-featured {
+  background: #f5f7fb;
+  border-color: #ccd5e4;
+}
+.digital-platform-featured .digital-platform-icon {
+  background: #07132f;
+  color: white;
+}
+.digital-quicklinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.digital-quicklinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #f5f7fb;
+  font-size: 11px;
+  font-weight: 600;
+}
+.digital-quicklinks a:hover {
+  background: #e9eef7;
+}
+.digital-contact {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e7ef;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.digital-contact a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.digital-contact svg {
+  flex-shrink: 0;
+  color: #53617b;
+}
+.digital-contact small {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  color: #53617b;
+  font-weight: 400;
+}
+.digital-actions {
+  margin-top: 16px;
+}
+.digital-action-buttons {
+  display: flex;
+  gap: 8px;
+}
+.digital-action-buttons a,
+.digital-action-buttons button {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dfe4ee;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: white;
+}
+.digital-action-buttons a {
+  flex: 1;
+}
+.digital-action-buttons a:hover,
+.digital-action-buttons button:hover {
+  background: #f5f7fb;
+}
+.digital-status {
+  min-height: 16px;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #53617b;
+  line-height: 1.5;
+}
+.digital-footer {
+  padding: 24px 4px 8px;
+  font-size: 11px;
+  color: #53617b;
+}
+.digital-footer span {
+  margin-left: 8px;
+}
+@media (max-width: 1023px) {
+  .digital-card {
+    max-width: 600px;
+    grid-template-columns: 1fr;
+  }
+  .digital-topline,
+  .digital-footer {
+    max-width: 600px;
+  }
+  .digital-profile-content {
+    padding: 32px;
+  }
+  .digital-photo img {
+    object-position: center 35%;
+  }
+  .digital-profile::after {
+    background: linear-gradient(100deg, #07132ff5, #07132fc9 55%, #07132f33);
+  }
+  .digital-identity {
+    padding-top: 48px;
+  }
+  .digital-identity h1 {
+    font-size: 32px;
+    margin-top: 16px;
+  }
+  .digital-intro {
+    margin-top: 16px;
+  }
+  .digital-profile-bottom {
+    display: none;
+  }
+}
+@media (max-width: 479px) {
+  .digital-page {
+    padding: 16px 12px max(16px, env(safe-area-inset-bottom));
+  }
+  .digital-topline {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    margin: 0 4px 16px;
+  }
+  .digital-topline > span:last-child {
+    font-size: 10px;
+  }
+  .digital-card {
+    border-radius: 24px;
+  }
+  .digital-profile-content {
+    padding: 24px;
+  }
+  .digital-logo {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .digital-logo img {
+    width: 192px;
+  }
+  .digital-identity {
+    padding-top: 32px;
+  }
+  .digital-identity h1 {
+    font-size: 28px;
+  }
+  .digital-identity .digital-eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+  .digital-intro {
+    font-size: 12px;
+    max-width: 260px;
+  }
+  .digital-connections {
+    padding: 24px 16px 16px;
+  }
+  .digital-heading h2 {
+    font-size: 24px;
+  }
+  .digital-heading > p:last-child {
+    font-size: 12px;
+  }
+  .digital-whatsapp {
+    padding: 16px;
+    gap: 12px;
+  }
+  .digital-whatsapp strong {
+    font-size: 12px;
+  }
+  .digital-whatsapp > svg {
+    flex-shrink: 0;
+  }
+  .digital-platform {
+    gap: 12px;
+    padding: 12px;
+  }
+  .digital-platform small {
+    font-size: 10px;
+  }
+  .digital-quicklinks {
+    gap: 4px;
+  }
+  .digital-quicklinks a {
+    gap: 4px;
+    font-size: 10px;
+    padding: 8px;
+  }
+  .digital-contact {
+    gap: 8px;
+  }
+  .digital-contact a {
+    font-size: 10px;
+    gap: 4px;
+  }
+  .digital-action-buttons {
+    gap: 4px;
+  }
+  .digital-action-buttons a,
+  .digital-action-buttons button {
+    font-size: 10px;
+    gap: 4px;
+    padding: 8px;
+  }
+}

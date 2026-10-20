@@ -9,6 +9,8 @@ export const site = {
   facebook: "https://web.facebook.com/sammacoficial/",
   instagram: "https://www.instagram.com/sammacoficial/",
   tiktok: "https://www.tiktok.com/@sammacoficial",
+  linkedin: "https://www.linkedin.com/in/sammac-oficial-8a9575445/",
+  cardUrl: "https://links.sammac.ao",
 };
 
 export const navigation = [
