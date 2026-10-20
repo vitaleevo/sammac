@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { publicationSlug } from "./slug";
 export const inquirySchema = z
   .object({
     type: z.enum(["contact", "service", "training", "meeting"]),
@@ -55,21 +56,41 @@ const publication = {
   ...common,
   slug: z
     .string()
-    .min(1)
+    .min(1, "Indique um título ou endereço com letras ou números.")
     .max(180)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Use letras, números e hífenes no endereço da publicação.",
+    ),
   content: z.string().trim().min(5).max(60_000),
   status: z.enum(["draft", "published"]),
 };
-export const postSchema = z.object({
-  ...publication,
-  excerpt: z.string().trim().min(5).max(1000),
-});
-export const projectSchema = z.object({
-  ...publication,
-  summary: z.string().trim().min(5).max(1000),
-  featured: z.boolean().optional(),
-});
+function normalizePublication(input: unknown) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return input;
+  const data = input as Record<string, unknown>;
+  if (
+    typeof data.title !== "string" ||
+    (data.slug !== undefined && typeof data.slug !== "string")
+  )
+    return input;
+  return { ...data, slug: publicationSlug(data.slug ?? "", data.title) };
+}
+
+export const postSchema = z.preprocess(
+  normalizePublication,
+  z.object({
+    ...publication,
+    excerpt: z.string().trim().min(5).max(1000),
+  }),
+);
+export const projectSchema = z.preprocess(
+  normalizePublication,
+  z.object({
+    ...publication,
+    summary: z.string().trim().min(5).max(1000),
+    featured: z.boolean().optional(),
+  }),
+);
 const date = z.string().date().or(z.literal("")).optional();
 export const courseSchema = z
   .object({

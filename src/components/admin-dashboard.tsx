@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { normalizeSlug, publicationSlug } from "@/lib/slug";
 type Tab = "dashboard" | "posts" | "projects" | "courses" | "inquiries";
 type AnyItem = {
   _id?: string;
@@ -347,6 +348,8 @@ function Editor({
     dialogRef.current?.showModal();
   }, []);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [slug, setSlug] = useState(item.slug || "");
   const [storageId, setStorageId] = useState(item.imageStorageId || "");
   const [preview, setPreview] = useState(item.image || item.imageUrl || "");
   async function upload(file: File) {
@@ -354,10 +357,11 @@ function Editor({
       !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
       file.size > 5 * 1024 * 1024
     ) {
-      alert("Escolha JPG, PNG ou WebP até 5 MB.");
+      setError("Escolha JPG, PNG ou WebP até 5 MB.");
       return;
     }
     setBusy(true);
+    setError("");
     try {
       const r = await fetch("/api/admin/upload-url", { method: "POST" });
       if (!r.ok) throw new Error("upload");
@@ -372,7 +376,7 @@ function Editor({
       setStorageId(res.storageId);
       setPreview(URL.createObjectURL(file));
     } catch {
-      alert("Não foi possível carregar a imagem.");
+      setError("Não foi possível carregar a imagem. Tente novamente.");
     } finally {
       setBusy(false);
     }
@@ -380,6 +384,7 @@ function Editor({
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
+    setError("");
     const f = Object.fromEntries(new FormData(e.currentTarget).entries());
     const data: Record<string, FormDataEntryValue | boolean | undefined> = {
       ...f,
@@ -388,7 +393,16 @@ function Editor({
       imageUrl: String(f.imageUrl || "") || undefined,
     };
     if (entity !== "course") {
-      data.slug = String(data.slug || slugify(String(data.title)));
+      data.slug = publicationSlug(
+        String(data.slug || ""),
+        String(data.title || ""),
+      );
+      if (!data.slug) {
+        setError("Indique um título ou endereço com letras ou números.");
+        setBusy(false);
+        return;
+      }
+      setSlug(data.slug);
     }
     if (entity === "project") data.featured = f.featured === "on";
     try {
@@ -400,10 +414,15 @@ function Editor({
       if (r.ok) saved();
       else {
         const result = await r.json();
-        alert(result.error || "Não foi possível guardar.");
+        setError(
+          result.error ||
+            "Não foi possível guardar. Verifique os dados e tente novamente.",
+        );
       }
     } catch {
-      alert("Falha de ligação. O conteúdo não foi guardado. Tente novamente.");
+      setError(
+        "Falha de ligação. O conteúdo não foi guardado. Tente novamente.",
+      );
     } finally {
       setBusy(false);
     }
@@ -442,7 +461,24 @@ function Editor({
         <div className="mt-6 grid gap-4">
           <Field name="title" label="Título" value={item.title} required />
           {entity !== "course" && (
-            <Field name="slug" label="Slug (opcional)" value={item.slug} />
+            <label className="grid gap-2 text-sm font-bold">
+              Endereço da publicação (opcional)
+              <input
+                name="slug"
+                value={slug}
+                onChange={(event) => setSlug(event.target.value)}
+                onBlur={(event) => setSlug(normalizeSlug(event.target.value))}
+                aria-describedby="publication-address-help"
+                className="rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-[#d51f28]"
+              />
+              <span
+                id="publication-address-help"
+                className="text-xs font-normal leading-5 text-slate-600"
+              >
+                Deixe em branco para usar o título. Espaços e acentos são
+                ajustados automaticamente. Exemplo: automacao-industrial.
+              </span>
+            </label>
           )}
           <Field
             name="category"
@@ -576,6 +612,14 @@ function Editor({
               />
             </div>
           )}
+          {error && (
+            <p
+              role="alert"
+              className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-800"
+            >
+              {error}
+            </p>
+          )}
           <button
             disabled={busy}
             className="rounded-xl bg-[#07132f] px-5 py-3.5 font-black text-white disabled:opacity-50"
@@ -699,14 +743,6 @@ function Area({
       />
     </label>
   );
-}
-function slugify(s: string) {
-  return s
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
 }
 function toDate(v?: number) {
   return v ? new Date(v).toISOString().slice(0, 10) : "";

@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint .",
     "test:api": "node --env-file=.env.local scripts/verify-api.mjs",
-    "format": "prettier --write src convex scripts next.config.ts postcss.config.mjs"
+    "format": "prettier --write src convex scripts next.config.ts postcss.config.mjs",
+    "test:publication": "tsc src/lib/slug.ts src/lib/validation.ts --outDir output/publication-tests --module commonjs --target es2020 --esModuleInterop --skipLibCheck --strict && node --test scripts/publication.test.mjs"
   },
   "dependencies": {
     "convex": "^1.47.0",

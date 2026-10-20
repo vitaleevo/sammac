@@ -50,3 +50,12 @@ Limitações conhecidas:
 Próximo passo recomendado: preencher datas e conteúdos reais no backoffice e acompanhar os primeiros pedidos recebidos. Antes de evoluir o sistema, ler este ficheiro e o README.
 
 Resultado final de laboratório: Lighthouse mobile 87 desempenho, 100 acessibilidade, 100 boas práticas e 100 SEO; CLS 0, TBT 170 ms e LCP 3,7 s. Ver VERIFICACAO_SAMMAC.md para limites e próximos ajustes.
+
+## Correção: publicação bloqueada pelo endereço do artigo
+
+- Causa: o editor só normalizava o endereço quando o campo estava vazio; texto manual com espaços, acentos ou maiúsculas chegava diretamente à expressão regular e era recusado.
+- Correção partilhada em `src/lib/slug.ts`: normalização em cliente e servidor para artigos e projetos; campos vazios usam o título. Endereços válidos mantêm-se.
+- O servidor também aceita o formato enviado pelo editor antigo, permitindo voltar a guardar um formulário já aberto sem apagar o conteúdo.
+- Validação mantém autorização, estado, imagem e conteúdo. Erros do editor aparecem em português no formulário e libertam o botão Guardar.
+- Verificação: 18 testes de regressão de publicação, quatro cenários reais de API em rascunhos privados (artigos/projetos com endereço manual/em branco), lint, TypeScript e build aprovados. Rascunhos de teste removidos.
+- Comandos: `pnpm test:publication`; `node --env-file=.env.local scripts/verify-publication.mjs` (respeita `TEST_BASE_URL`).

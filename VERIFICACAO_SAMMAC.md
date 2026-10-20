@@ -58,3 +58,9 @@ Convex: posts, projects, courses, inquiries e rateLimits. IDs próprios, índice
 Design 90; Integridade 88; Performance 85; Segurança 90; Escalabilidade 85; Manutenção 88. DB Score ponderado: 87,7.
 
 Alteração de esquema adicional, sem remoção de tabelas existentes. A cópia de segurança deve preceder mudanças futuras; não foi feito ensaio de restauro nesta entrega. Production Ready: **YES para o âmbito atual**. Antes de crescer: paginação, política de retenção de pedidos e rotina de exportação/restauro.
+
+## Regressão de publicação — endereço manual
+
+Normalização partilhada de endereços em cliente e servidor. Verificados 18 cenários de schema (incluindo estado Publicado e preservação da imagem/conteúdo) e quatro cenários de API em rascunhos temporários removidos após teste. Lint, TypeScript e build aprovados. Não foram alteradas permissões nem a estrutura da base de dados.
+
+Revisão manual do editor: UX 93, UI 93, acessibilidade 93, consistência 94, conversão 92. Performance e escalabilidade não foram novamente medidas nesta correção; os resultados e limites anteriores continuam descritos acima. Campos rotulados, ajuda associada e erro com role=alert, sem diálogo nativo bloqueante.
